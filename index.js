@@ -58,12 +58,19 @@ function csurf (options) {
     ? ['GET', 'HEAD', 'OPTIONS']
     : opts.ignoreMethods
 
+  // ignored routes
+  var ignoreRoutes = opts.ignoreRoutes === undefined
+    ? []
+    : opts.ignoreRoutes
+
   if (!Array.isArray(ignoreMethods)) {
     throw new TypeError('option ignoreMethods must be an array')
   }
 
   // generate lookup
   var ignoreMethod = getIgnoredMethods(ignoreMethods)
+
+  var ignoreRoute = getIgnoredRoutes(ignoreRoutes)
 
   return function csrf (req, res, next) {
     // validate the configuration against request
@@ -108,7 +115,7 @@ function csurf (options) {
     }
 
     // verify the incoming token
-    if (!ignoreMethod[req.method] && !tokens.verify(secret, value(req))) {
+    if (!ignoreMethod[req.method] && !ignoreRoute[req.originalUrl] && !tokens.verify(secret, value(req))) {
       return next(createError(403, 'invalid csrf token', {
         code: 'EBADCSRFTOKEN'
       }))
@@ -181,6 +188,17 @@ function getIgnoredMethods (methods) {
   for (var i = 0; i < methods.length; i++) {
     var method = methods[i].toUpperCase()
     obj[method] = true
+  }
+
+  return obj
+}
+
+function getIgnoredRoutes (routes) {
+  var obj = Object.create(null)
+
+  for (var i = 0; i < routes.length; i++) {
+    var route = routes[i].toUpperCase()
+    obj[route] = true
   }
 
   return obj
