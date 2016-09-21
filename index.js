@@ -197,8 +197,7 @@ function getIgnoredRoutes (routes) {
   var obj = Object.create(null)
 
   for (var i = 0; i < routes.length; i++) {
-    var route = routes[i].toUpperCase()
-    obj[route] = true
+    obj[routes[i]] = true
   }
 
   return obj
