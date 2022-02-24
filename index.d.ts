@@ -3,6 +3,8 @@
 // Definitions by: Hiroki Horiuchi <https://github.com/horiuchi>
 //                 Piotr Błażejewicz <https://github.com/peterblazejewicz>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+//
+// Pasted and Tweaked by: Francis Okoyo <https://github.com/francisokoyo>
 import express = require('express-serve-static-core');
 
 declare global {
@@ -20,6 +22,8 @@ declare function csurf(options?: {
      */
     cookie?: csurf.CookieOptions | boolean | undefined;
     ignoreMethods?: string[] | undefined;
+    ignoreRoutes?: string[] | undefined;
+    ignoreRoutePatterns?: RegExp[] | undefined;
     sessionKey?: string | undefined;
 }): express.RequestHandler;
 
