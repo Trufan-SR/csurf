@@ -7,7 +7,7 @@
     "Douglas Christopher Wilson <doug@somethingdoug.com>"
   ],
   "license": "MIT",
-  "repository": "expressjs/csurf",
+  "repository": "Trufan-SR/csurf",
   "dependencies": {
     "cookie": "0.4.0",
     "cookie-signature": "1.0.6",
