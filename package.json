@@ -42,7 +42,8 @@
   "files": [
     "HISTORY.md",
     "LICENSE",
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
   "keywords": [
     "csrf",
