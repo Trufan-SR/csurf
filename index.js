@@ -63,6 +63,7 @@ function csurf (options) {
     ? []
     : opts.ignoreRoutes
 
+  // ignored route patterns
   var ignoreRoutePatterns = opts.ignoreRoutePatterns === undefined
     ? []
     : opts.ignoreRoutePatterns

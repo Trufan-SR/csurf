@@ -233,7 +233,7 @@ that you expect to only come from your website. An existing session, even if
 it belongs to an authenticated user, is not enough to protect against CSRF
 attacks.
 
-The following is an example of how to order your routes so that certain endpoints
+The following is an example of how to configure csurf so that certain endpoints
 do not check for a valid CSRF token.
 
 ```js
@@ -248,13 +248,16 @@ var app = express()
 // create api router
 var api = createApiRouter()
 
-// mount api before csrf is appended to the app stack
-app.use('/api', api)
-
 // now add csrf and other middlewares, after the "/api" was mounted
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(csrf({ cookie: true }))
+app.use(csrf({ 
+  cookie: true,
+  // Ignores the route /api
+  ignoreRoute: ['/api']
+  // Ignores anything following /api/ (/api/*)
+  ignoreRoutePatterns: [ /\/api\/.*$/ ]
+}))
 
 app.get('/form', function (req, res) {
   // pass the csrfToken to the view
